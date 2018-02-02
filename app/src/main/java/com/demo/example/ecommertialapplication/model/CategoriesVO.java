@@ -10,36 +10,29 @@ import java.util.ArrayList;
 public class CategoriesVO implements Parcelable
 {
     @SerializedName("id")
-    public String _categoryId;
+    public String categoryId;
 
     @SerializedName("name")
-    public String _categoryName;
+    public String categoryName;
 
     @SerializedName("products")
-    public ArrayList<ProductsVO> _products;
-
-    @SerializedName("variants")
-    public ArrayList<VariantsVO> _variants;
+    public ArrayList<ProductsVO> products;
 
     public String getCategoryId()
     {
-        return _categoryId;
+        return categoryId;
     }
 
     public String getCategoryName()
     {
-        return _categoryName;
+        return categoryName;
     }
 
     public ArrayList<ProductsVO> getProducts()
     {
-        return _products;
+        return products;
     }
-
-    public ArrayList<VariantsVO> getVariants()
-    {
-        return _variants;
-    }
+    
 
     @Override
     public int describeContents()
@@ -50,22 +43,18 @@ public class CategoriesVO implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags)
     {
-        dest.writeString(this._categoryId);
-        dest.writeString(this._categoryName);
-        dest.writeTypedList(this._products);
-        dest.writeTypedList(this._variants);
+        dest.writeString(this.categoryId);
+        dest.writeString(this.categoryName);
+        dest.writeTypedList(this.products);
     }
 
     private CategoriesVO(Parcel in)
     {
-        this._categoryId = in.readString();
-        this._categoryName = in.readString();
+        this.categoryId = in.readString();
+        this.categoryName = in.readString();
 
-        _products = new ArrayList<>();
-        in.readTypedList(_products, ProductsVO.CREATOR);
-
-        _variants = new ArrayList<>();
-        in.readTypedList(_variants, VariantsVO.CREATOR);
+        products = new ArrayList<>();
+        in.readTypedList(products, ProductsVO.CREATOR);
     }
 
     public CategoriesVO()

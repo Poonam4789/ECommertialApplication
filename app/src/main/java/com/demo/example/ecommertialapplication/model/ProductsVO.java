@@ -1,36 +1,55 @@
 package com.demo.example.ecommertialapplication.model;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class ProductsVO implements Parcelable
 {
     @SerializedName("id")
-    public String _productId;
+    public String productId;
 
     @SerializedName("name")
-    public String _productName;
+    public String productName;
 
 
     @SerializedName("date_added")
-    public String _productAddedDate;
+    public String productAddedDate;
 
+    @SerializedName("variants")
+    public ArrayList<VariantsVO> variants;
+
+    @SerializedName("tax")
+    public TaxVO tax;
 
     public String getProductId()
     {
-        return _productId;
+        return productId;
     }
 
     public String getProductName()
     {
-        return _productName;
+        return productName;
     }
 
     public String getProductAddedDate()
     {
-        return _productAddedDate;
+        return productAddedDate;
+    }
+
+    public ArrayList<VariantsVO> getVariants()
+    {
+        return variants;
+    }
+
+    public TaxVO getTax()
+    {
+        return tax;
     }
 
     @Override
@@ -39,20 +58,28 @@ public class ProductsVO implements Parcelable
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void writeToParcel(Parcel dest, int flags)
     {
-        dest.writeString(this._productId);
-        dest.writeString(this._productName);
-        dest.writeString(this._productAddedDate);
+        dest.writeString(this.productId);
+        dest.writeString(this.productName);
+        dest.writeString(this.productAddedDate);
+        dest.writeTypedList(this.variants);
+        dest.writeTypedObject(this.tax, flags);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private ProductsVO(Parcel in)
     {
-        this._productId = in.readString();
-        this._productName = in.readString();
-        this._productAddedDate = in.readString();
+        this.productId = in.readString();
+        this.productName = in.readString();
+        this.productAddedDate = in.readString();
+        variants = new ArrayList<>();
+        in.readTypedList(variants, VariantsVO.CREATOR);
+        this.tax = new TaxVO();
+        in.readTypedObject(TaxVO.CREATOR);
     }
 
     public ProductsVO()
@@ -62,6 +89,7 @@ public class ProductsVO implements Parcelable
 
     public static final Creator<ProductsVO> CREATOR = new Creator<ProductsVO>()
     {
+        @RequiresApi(api = Build.VERSION_CODES.M)
         public ProductsVO createFromParcel(Parcel source)
         {
             return new ProductsVO(source);

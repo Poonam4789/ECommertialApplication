@@ -8,37 +8,37 @@ import com.google.gson.annotations.SerializedName;
 public class VariantsVO implements Parcelable
 {
     @SerializedName("id")
-    public String _variantId;
+    public String variantId;
 
     @SerializedName("color")
-    public String _variantColor;
+    public String variantColor;
 
     @SerializedName("size")
-    public String _variantSize;
+    public String variantSize;
 
 
     @SerializedName("price")
-    public String _variantPrice;
+    public String variantPrice;
 
 
     public String getVariantId()
     {
-        return _variantId;
+        return variantId;
     }
 
     public String getVariantColor()
     {
-        return _variantColor;
+        return variantColor;
     }
 
     public String getVariantSize()
     {
-        return _variantSize;
+        return variantSize;
     }
 
     public String getVariantPrice()
     {
-        return _variantPrice;
+        return variantPrice;
     }
 
 
@@ -51,19 +51,19 @@ public class VariantsVO implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags)
     {
-        dest.writeString(this._variantId);
-        dest.writeString(this._variantColor);
-        dest.writeString(this._variantSize);
-        dest.writeString(this._variantPrice);
+        dest.writeString(this.variantId);
+        dest.writeString(this.variantColor);
+        dest.writeString(this.variantSize);
+        dest.writeString(this.variantPrice);
     }
 
 
     private VariantsVO(Parcel in)
     {
-        this._variantId = in.readString();
-        this._variantColor = in.readString();
-        this._variantSize = in.readString();
-        this._variantPrice = in.readString();
+        this.variantId = in.readString();
+        this.variantColor = in.readString();
+        this.variantSize = in.readString();
+        this.variantPrice = in.readString();
     }
 
     public VariantsVO()

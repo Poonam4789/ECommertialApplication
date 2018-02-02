@@ -22,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity
 {
     private NetworkChangeReceiver _networkReceiver;
     @BindView(R.id.progressDailog)
-    protected static ProgressBar progressDailog;
+    protected ProgressBar progressDailog;
     protected Unbinder _unbinder;
 
     @Override

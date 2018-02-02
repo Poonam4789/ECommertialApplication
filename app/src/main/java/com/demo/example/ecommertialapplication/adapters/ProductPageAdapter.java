@@ -1,23 +1,32 @@
 package com.demo.example.ecommertialapplication.adapters;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.demo.example.ecommertialapplication.Fragments.ProductsCoverFragment;
+import com.demo.example.ecommertialapplication.Fragments.VariantDetailFragment;
 import com.demo.example.ecommertialapplication.R;
 import com.demo.example.ecommertialapplication.model.ProductsVO;
+import com.demo.example.ecommertialapplication.model.TaxVO;
 
 import java.util.ArrayList;
 
-public class ProductPageAdapter extends RecyclerView.Adapter<ProductPageAdapter.ViewHolder>//RecyclerView.Adapter<AbsArticleHolder>
+public class ProductPageAdapter extends RecyclerView.Adapter<ProductPageAdapter.ViewHolder>
 {
     private ArrayList<ProductsVO> _productsList;
+    private TaxVO _taxVOS;
+    FragmentManager _fragmentManager;
 
-    public ProductPageAdapter(ArrayList<ProductsVO> list)
+    public ProductPageAdapter(FragmentManager supportFragmentManager, ArrayList<ProductsVO> list)
     {
         _productsList = list;
+        _fragmentManager = supportFragmentManager;
     }
 
     @Override
@@ -33,29 +42,38 @@ public class ProductPageAdapter extends RecyclerView.Adapter<ProductPageAdapter.
         holder._productId.setText(_productsList.get(position).getProductId());
         holder._productName.setText(_productsList.get(position).getProductName());
         holder._productAddDate.setText(_productsList.get(position).getProductAddedDate());
-
-        holder._productName.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
+        _taxVOS = _productsList.get(position).getTax();
+        Log.d("TAX", "SIze" + _taxVOS.taxAmount);
+        holder._productTax.setText(_taxVOS.taxName + " : " + _taxVOS.taxAmount);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView _productId, _productName, _productAddDate;
+        private TextView _productId, _productName, _productAddDate, _productTax;
 
         public ViewHolder(View view)
         {
             super(view);
-
+            view.setOnClickListener(this);
             _productId = (TextView) view.findViewById(R.id.product_Id);
             _productName = (TextView) view.findViewById(R.id.product_name);
             _productAddDate = (TextView) view.findViewById(R.id.product_add_date);
+            _productTax = (TextView) view.findViewById(R.id.product_tax);
 
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            Log.d("Product", "position" + _productsList.get(getPosition()).getProductName());
+            VariantDetailFragment variantDetailFragment = new VariantDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(VariantDetailFragment.POSITION, getPosition());
+            bundle.putString(VariantDetailFragment.PROCUCT_NAME, _productsList.get(getPosition()).getProductName());
+            bundle.putParcelableArrayList(ProductsCoverFragment.VARIANT_LIST, _productsList.get(getPosition()).getVariants());
+            variantDetailFragment.setArguments(bundle);
+          //  _fragmentManager.beginTransaction().replace(R.id.contentlayout, variantDetailFragment, "Variant_Dialog").commit();
+            variantDetailFragment.show(_fragmentManager, "DIALOG WINDOW");
         }
     }
 

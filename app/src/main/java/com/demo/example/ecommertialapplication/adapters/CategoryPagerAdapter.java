@@ -11,12 +11,12 @@ import java.util.List;
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter
 {
-    private List<CategoriesVO> _articleCategoryList;
+    private List<CategoriesVO> _productCategoryList;
 
-    public CategoryPagerAdapter(FragmentManager fm, List<CategoriesVO> articleCategoryList,Bundle bundle)
+    public CategoryPagerAdapter(FragmentManager fm, List<CategoriesVO> productCategoryList)
     {
         super(fm);
-        _articleCategoryList = articleCategoryList;
+        _productCategoryList = productCategoryList;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter
     {
         ProductsCoverFragment pageFragment = new ProductsCoverFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ProductsCoverFragment.PRODUCT_LIST,_articleCategoryList.get(position)._products);
+        bundle.putParcelableArrayList(ProductsCoverFragment.PRODUCT_LIST,_productCategoryList.get(position).getProducts());
         pageFragment.setArguments(bundle);
         return pageFragment;
     }
@@ -32,11 +32,11 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter
     @Override
     public int getCount()
     {
-        return _articleCategoryList.size();
+        return _productCategoryList.size();
     }
     @Override
     public CharSequence getPageTitle(int position)
     {
-        return _articleCategoryList.get(position)._categoryName;
+        return _productCategoryList.get(position).getCategoryName();
     }
 }

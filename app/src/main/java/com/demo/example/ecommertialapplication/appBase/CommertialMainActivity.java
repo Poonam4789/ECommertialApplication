@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.demo.example.ecommertialapplication.Fragments.CategoryPageFragment;
 import com.demo.example.ecommertialapplication.R;
+import com.demo.example.ecommertialapplication.network.NetworkStatus;
 
 
 public class CommertialMainActivity extends BaseActivity
