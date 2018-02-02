@@ -19,7 +19,7 @@ public class RestApiClient
     public static final String BaseApiUrl = "https://stark-spire-93433.herokuapp.com";
     private static final String TAG = "CLIENTLOG";
     private static RestApiClient _apiClientInstance;
-    private RestApiInterface _restApiInterface;
+    private static RestApiInterface _restApiInterface;
 
     private RestApiClient()
     {
@@ -35,7 +35,7 @@ public class RestApiClient
         return _apiClientInstance;
     }
 
-    public RestApiInterface getRetrofitApiInstance()
+    public RestApiInterface  getRetrofitApiInstance()
     {
         if (_restApiInterface == null)
         {

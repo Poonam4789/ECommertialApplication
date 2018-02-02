@@ -1,8 +1,14 @@
 package com.demo.example.ecommertialapplication.network;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.demo.example.ecommertialapplication.CommertialApplication;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -15,7 +21,6 @@ public class LoggingInterceptor implements Interceptor
 {
 
     private static final String LOG_TAG = "OkHttp";
-
     /**
      * .header(key, val): will override preexisting headers identified by key
      * .addHeader(key, val): will add the header and don’t override preexisting ones
@@ -45,6 +50,16 @@ public class LoggingInterceptor implements Interceptor
 
         MediaType contentType = response.body().contentType();
         String content = response.body().string();
+
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(CommertialApplication.getApplicationInstance().openFileOutput("response.json", Context.MODE_PRIVATE));
+            outputStreamWriter.write(content);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
         Log.d(LOG_TAG, content);
 
         ResponseBody wrappedBody = ResponseBody.create(contentType, content);

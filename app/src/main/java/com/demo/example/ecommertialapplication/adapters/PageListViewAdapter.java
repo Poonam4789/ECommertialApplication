@@ -34,7 +34,6 @@ public class PageListViewAdapter extends ArrayAdapter<ProductsVO>
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         _productsList = productsVOArrayList;
         _fragmentManager = supportFragmentManager;
-        ;
     }
 
 
@@ -76,5 +75,11 @@ public class PageListViewAdapter extends ArrayAdapter<ProductsVO>
             }
         });
         return convertView;
+    }
+
+    @Override
+    public int getCount()
+    {
+        return _productsList.size();
     }
 }

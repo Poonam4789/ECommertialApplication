@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.demo.example.ecommertialapplication.R;
+import com.demo.example.ecommertialapplication.adapters.VariantPagerAdapter;
 import com.demo.example.ecommertialapplication.model.VariantsVO;
 
 import java.util.ArrayList;
@@ -29,23 +31,21 @@ public class VariantDetailFragment extends DialogFragment
     private TextView _dialogDismissCross;
     private ArrayList<VariantsVO> _variantList;
     private String _dialogTitle;
-    private TextView _variant_id, _variant_color, _variant_size, _variant_price;
+    private ListView _variantLiew;
+    VariantPagerAdapter _variantPagerAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.variant_item_dialog, null, false);
+        view = inflater.inflate(R.layout.variant_dialog_layout, null, false);
 
         _dialogDismissCross = (TextView) view.findViewById(R.id.dialog_dismiss_cross);
         _dialogToolbar = (Toolbar) view.findViewById(R.id.dialog_toolbar);
         _toolbarTextView = (TextView) view.findViewById(R.id.toolbar_title);
 
-        _variant_id = view.findViewById(R.id.variant_id);
-        _variant_color = view.findViewById(R.id.variant_color);
-        _variant_size = view.findViewById(R.id.variant_size);
-        _variant_price = view.findViewById(R.id.variant_price);
+        _variantLiew = view.findViewById(R.id.variantListView);
 
 
         if (_dialogDismissCross != null)
@@ -63,17 +63,16 @@ public class VariantDetailFragment extends DialogFragment
         _variantList = getArguments().getParcelableArrayList(ProductsCoverFragment.VARIANT_LIST);
         _dialogTitle = getArguments().getString(PROCUCT_NAME);
         _position = getArguments().getInt(POSITION);
+
+        setVariantData();
         Log.d(TAG, "no of Products" + _variantList.size());
         return view;
     }
 
     private void setVariantData()
     {
-        setToolbarTitle(_dialogTitle);
-        _variant_id.setText("Id : " + _variantList.get(_position).variantId);
-        _variant_color.setText("Color : " + _variantList.get(_position).variantColor);
-        _variant_size.setText("Size : " + _variantList.get(_position).variantSize);
-        _variant_price.setText("Price : " + _variantList.get(_position).variantPrice);
+        _variantPagerAdapter = new VariantPagerAdapter(getContext(), R.layout.product_view_item, _variantList);
+        _variantLiew.setAdapter(_variantPagerAdapter);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class VariantDetailFragment extends DialogFragment
     {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         super.onViewCreated(view, savedInstanceState);
-        setVariantData();
+        setToolbarTitle(_dialogTitle);
     }
 
     @Override
