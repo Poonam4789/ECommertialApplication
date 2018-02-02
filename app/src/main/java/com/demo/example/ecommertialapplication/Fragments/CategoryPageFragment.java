@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.demo.example.ecommertialapplication.CommercialProductsResponse;
 import com.demo.example.ecommertialapplication.CommertialApplication;
 import com.demo.example.ecommertialapplication.R;
@@ -18,7 +20,9 @@ import com.demo.example.ecommertialapplication.adapters.CategoryPagerAdapter;
 import com.demo.example.ecommertialapplication.appBase.CommertialMainActivity;
 import com.demo.example.ecommertialapplication.model.CategoriesVO;
 import com.demo.example.ecommertialapplication.network.RestApiInterface;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +38,7 @@ public class CategoryPageFragment extends Fragment
     CategoryPagerAdapter _categoryPagerAdapter;
     List<CategoriesVO> _categoriesVOList;
     CommertialMainActivity commertialMainActivity;
+    TextView _all_title;
 
     @Nullable
     @Override
@@ -43,12 +48,14 @@ public class CategoryPageFragment extends Fragment
         View view = inflater.inflate(R.layout.category_page_layout, container, false);
         _categoryTabs = view.findViewById(R.id.categories_tabs);
         _productsPager = view.findViewById(R.id.product_pager);
+
+        _all_title = view.findViewById(R.id.all_title);
+
         _categoryTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         commertialMainActivity = new CommertialMainActivity();
         CallWebservice();
         return view;
     }
-
 
     private void CallWebservice()
     {
@@ -108,6 +115,19 @@ public class CategoryPageFragment extends Fragment
         });
     }
 
+    public void setCategortyProductContainerVisibility(boolean visibility)
+    {
+        if (visibility)
+        {
+            _categoryTabs.setVisibility(View.VISIBLE);
+            _all_title.setVisibility(View.GONE);
+        }
+        else
+        {
+            _categoryTabs.setVisibility(View.GONE);
+            _all_title.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public void onDestroyView()

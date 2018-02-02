@@ -72,7 +72,6 @@ public class ProductPageAdapter extends RecyclerView.Adapter<ProductPageAdapter.
             bundle.putString(VariantDetailFragment.PROCUCT_NAME, _productsList.get(getPosition()).getProductName());
             bundle.putParcelableArrayList(ProductsCoverFragment.VARIANT_LIST, _productsList.get(getPosition()).getVariants());
             variantDetailFragment.setArguments(bundle);
-          //  _fragmentManager.beginTransaction().replace(R.id.contentlayout, variantDetailFragment, "Variant_Dialog").commit();
             variantDetailFragment.show(_fragmentManager, "DIALOG WINDOW");
         }
     }
